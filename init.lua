@@ -7,6 +7,8 @@ local map = vim.keymap.set
 map('n', '<leader>pv', vim.cmd.Ex)
 map('n', '<leader>lf', vim.lsp.buf.format)
 map('n', '<leader>c', '1z=')
+map({ 'n', 'v' }, '<leader>y', '"+y')
+map({ 'n', 'v' }, '<leader>d', '"+d')
 
 -- num de linea
 vim.opt.number = true
@@ -34,20 +36,29 @@ vim.diagnostic.config({
 vim.pack.add({
   { src = 'https://github.com/neovim/nvim-lspconfig' },
   { src = 'https://github.com/nvim-telescope/telescope.nvim' },
+  { src = 'https://github.com/nvim-lua/plenary.nvim' },
   { src = 'https://github.com/prichrd/netrw.nvim' },
   { src = 'https://github.com/Saghen/blink.cmp',                version = vim.version.range('1.*') },
   { src = 'https://github.com/nvim-tree/nvim-web-devicons' },
   { src = 'https://github.com/folke/tokyonight.nvim' },
   { src = 'https://github.com/nvim-treesitter/nvim-treesitter', version = 'main' },
+  { src = 'https://github.com/chomosuke/typst-preview.nvim',    version = vim.version.range('1.*') },
 })
 
 require('netrw').setup({})
 require('blink.cmp').setup({})
 
+local builtin = require('telescope.builtin')
+map('n', '<leader>ff', builtin.find_files, { desc = 'Telescope find files' })
+map('n', '<leader>fg', builtin.live_grep, { desc = 'Telescope live grep' })
+map('n', '<leader>fb', builtin.buffers, { desc = 'Telescope buffers' })
+map('n', '<leader>fh', builtin.help_tags, { desc = 'Telescope help tags' })
+
+-- colorscheme
 vim.cmd [[colorscheme tokyonight-night]]
 
 -- config de LSP
-vim.lsp.enable({ 'lua_ls', 'ts_ls', 'hls', 'pylsp' })
+vim.lsp.enable({ 'lua_ls', 'ts_ls', 'hls', 'pylsp', 'tinymist' })
 
 -- lua-language-server
 vim.lsp.config('lua_ls', {
@@ -89,7 +100,6 @@ vim.lsp.config('hls', {
 })
 
 -- python lsp
-
 vim.lsp.config('pylsp', {
   settings = {
     pylsp = {
@@ -102,3 +112,11 @@ vim.lsp.config('pylsp', {
     }
   }
 })
+
+-- tinymist lsp
+vim.lsp.config["tinymist"] = {
+  cmd = { "tinymist" },
+  filetypes = { "typst" },
+  settings = {
+  }
+}
