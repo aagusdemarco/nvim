@@ -58,7 +58,9 @@ map('n', '<leader>fh', builtin.help_tags, { desc = 'Telescope help tags' })
 vim.cmd [[colorscheme tokyonight-night]]
 
 -- config de LSP
-vim.lsp.enable({ 'lua_ls', 'ts_ls', 'hls', 'pylsp', 'tinymist' })
+vim.lsp.enable({ 'lua_ls', 'esLint', 'jsonls', 'hls', 'pylsp', 'tinymist' })
+local capabilities = vim.lsp.protocol.make_client_capabilities()
+capabilities.textDocument.completion.completionItem.snippetSupport = true
 
 -- lua-language-server
 vim.lsp.config('lua_ls', {
@@ -120,3 +122,22 @@ vim.lsp.config["tinymist"] = {
   settings = {
   }
 }
+
+-- esLint
+local base_on_attach = vim.lsp.config.eslint.on_attach
+vim.lsp.config("eslint", {
+  on_attach = function(client, bufnr)
+    if not base_on_attach then return end
+
+    base_on_attach(client, bufnr)
+    vim.api.nvim_create_autocmd("BufWritePre", {
+      buffer = bufnr,
+      command = "LspEslintFixAll",
+    })
+  end,
+})
+
+-- jsonls
+vim.lsp.config('jsonls', {
+  capabilities = capabilities,
+})
