@@ -58,7 +58,7 @@ map('n', '<leader>fh', builtin.help_tags, { desc = 'Telescope help tags' })
 vim.cmd [[colorscheme tokyonight-night]]
 
 -- config de LSP
-vim.lsp.enable({ 'lua_ls', 'esLint', 'jsonls', 'hls', 'pylsp', 'tinymist' })
+vim.lsp.enable({ 'lua_ls', 'esLint', 'jsonls', 'hls', 'pylsp', 'tinymist', 'ts_ls' })
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities.textDocument.completion.completionItem.snippetSupport = true
 
