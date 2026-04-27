@@ -55,7 +55,7 @@ vim.opt.smartcase = true
 -- agregar popups con feedback
 vim.diagnostic.config({
   virtual_text = true,
-  signals = true,
+  signs = true,
   underline = true,
   update_in_insert = false,
   severity_sort = true
@@ -102,7 +102,7 @@ local capabilities = require('blink.cmp').get_lsp_capabilities()
 vim.lsp.config('*', { capabilities = capabilities })
 
 -- config de LSP
-vim.lsp.enable({ 'lua_ls', 'eslint', 'jsonls', 'hls', 'pylsp', 'tinymist', 'ts_ls' })
+vim.lsp.enable({ 'lua_ls', 'eslint', 'jsonls', 'hls', 'pylsp', 'tinymist', 'ts_ls', 'clangd'})
 
 -- lua-language-server
 vim.lsp.config('lua_ls', {
@@ -165,15 +165,11 @@ vim.lsp.config('tinymist', {
 })
 
 -- eslint
-local base_on_attach = vim.lsp.config.eslint.on_attach
 vim.lsp.config('eslint', {
   on_attach = function(client, bufnr)
-    if not base_on_attach then return end
-
-    base_on_attach(client, bufnr)
     vim.api.nvim_create_autocmd('BufWritePre', {
       buffer = bufnr,
-      command = 'LspEslintFixAll',
+      command = 'EslintFixAll',
     })
   end,
 })
@@ -189,3 +185,7 @@ vim.api.nvim_create_autocmd('FileType', {
     vim.opt_local.spelllang = 'en,es'
   end,
 })
+
+-- clangd
+
+vim.lsp.config('clangd', {})
