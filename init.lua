@@ -66,7 +66,7 @@ vim.pack.add({
   { src = 'https://github.com/neovim/nvim-lspconfig' },
   { src = 'https://github.com/nvim-telescope/telescope.nvim' },
   { src = 'https://github.com/nvim-lua/plenary.nvim' },
-  { src = 'https://github.com/prichrd/netrw.nvim' },
+  -- { src = 'https://github.com/prichrd/netrw.nvim' },
   { src = 'https://github.com/Saghen/blink.cmp',                version = vim.version.range('1.*') },
   { src = 'https://github.com/nvim-tree/nvim-web-devicons' },
   { src = 'https://github.com/folke/tokyonight.nvim' },
@@ -75,7 +75,7 @@ vim.pack.add({
   { src = 'https://github.com/echasnovski/mini.pairs' },
 })
 
-require('netrw').setup({})
+-- require('netrw').setup({})
 require('blink.cmp').setup({})
 require('mini.pairs').setup({})
 
@@ -102,7 +102,7 @@ local capabilities = require('blink.cmp').get_lsp_capabilities()
 vim.lsp.config('*', { capabilities = capabilities })
 
 -- config de LSP
-vim.lsp.enable({ 'lua_ls', 'eslint', 'jsonls', 'hls', 'pylsp', 'tinymist', 'ts_ls', 'clangd'})
+vim.lsp.enable({ 'lua_ls', 'eslint', 'jsonls', 'pylsp', 'tinymist', 'ts_ls', 'clangd'})
 
 -- lua-language-server
 vim.lsp.config('lua_ls', {
@@ -136,11 +136,6 @@ vim.lsp.config('lua_ls', {
   settings = {
     Lua = {}
   }
-})
-
--- haskell-language-server
-vim.lsp.config('hls', {
-  filetypes = { 'haskell', 'lhaskell', 'cabal' },
 })
 
 -- python lsp
